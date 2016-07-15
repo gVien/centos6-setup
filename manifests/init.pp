@@ -1,54 +1,9 @@
-# Class: centossetup
-# ===========================
-#
-# Full description of class centossetup here.
-#
-# Parameters
-# ----------
-#
-# Document parameters here.
-#
-# * `sample parameter`
-# Explanation of what this parameter affects and what it defaults to.
-# e.g. "Specify one or more upstream ntp servers as an array."
-#
-# Variables
-# ----------
-#
-# Here you should define a list of variables that this module would require.
-#
-# * `sample variable`
-#  Explanation of how this variable affects the function of this class and if
-#  it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#  External Node Classifier as a comma separated list of hostnames." (Note,
-#  global variables should be avoided in favor of class parameters as
-#  of Puppet 2.6.)
-#
-# Examples
-# --------
-#
-# @example
-#    class { 'centossetup':
-#      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#    }
-#
-# Authors
-# -------
-#
-# Author Name <author@domain.com>
-#
-# Copyright
-# ---------
-#
-# Copyright 2016 Your name here, unless otherwise noted.
-#
-
+# outline/plan
 # create user deployer
 # install packages
 # create shell to run install all the development tools
 # including ruby, rails, etc
 # create directory "/var/www/texter" and allow user deployer to have access
-#
 class centossetup {
 
   # create group and user
@@ -98,9 +53,14 @@ class centossetup {
     ensure => installed,
   }
 
+  # exec { 'make install.sh writable':
+  #   command => "chmod +x /root/centos6-setup/manifests/install.sh",  # need relative path
+  #   path    => "/root/centos6-setup/manifests/"
+  # }
+
   file { 'ruby-rails-install-script':
         ensure => 'file',
-        path => '/root/install.sh',
+        path => '/root/centos6-setup/manifests/install.sh', # need relative path
         owner => 'root',
         group => 'root',
         mode  => '0755',
@@ -108,7 +68,7 @@ class centossetup {
     }
 
   exec { 'install-script':
-    command => "/root/install.sh",
+    command => "/root/centos6-setup/manifests/install.sh",  # need relative path
   }
 
   package { ['epel-release', 'nodejs']:

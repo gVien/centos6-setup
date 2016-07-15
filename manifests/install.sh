@@ -9,7 +9,7 @@ exec $SHELL
 git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
 exec $SHELL
-rbenv install -v 2.1.0
+rbenv install -v 2.1.0  # better to put this inside the .pp manifest to ensure it's installed
 rbenv global 2.1.0
 echo "gem: --no-document" > ~/.gemrc
 # install Rails
