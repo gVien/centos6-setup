@@ -58,7 +58,20 @@ class centossetup {
   #   path    => "/root/centos6-setup/manifests/"
   # }
 
-  file { 'ruby-rails-install-script':
+  file { 'rbenv-script':
+        ensure => 'file',
+        path => '/root/centos6-setup/manifests/install_rbenv.sh', # need relative path
+        owner => 'root',
+        group => 'root',
+        mode  => '0755',
+        notify => Exec['install-rbenv-script'],
+    }
+
+  exec { 'install-rbenv-script':
+    command => "/root/centos6-setup/manifests/install_rbenv.sh",  # need relative path
+  }
+
+  file { 'ruby-rails-script':
         ensure => 'file',
         path => '/root/centos6-setup/manifests/install.sh', # need relative path
         owner => 'root',
